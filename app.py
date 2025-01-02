@@ -1,12 +1,11 @@
-from fastapi import FastAPI, HTTPException
-import sqlite3
+from fastapi import FastAPI
 from pydantic import BaseModel
+from openai import AsyncOpenAI
 import os
 from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional
 import asyncio
-from openai import AsyncOpenAI
 
 load_dotenv()
 openai = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
@@ -26,6 +25,8 @@ app.add_middleware(
 class AssistantRequest(BaseModel):
     message: str
     thread_id: Optional[str] = None
+
+
 
 @app.get("/")
 async def root():
